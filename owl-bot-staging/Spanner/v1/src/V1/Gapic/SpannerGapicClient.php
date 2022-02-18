@@ -557,18 +557,18 @@ class SpannerGapicClient
      * $spannerClient = new SpannerClient();
      * try {
      *     $formattedDatabase = $spannerClient->databaseName('[PROJECT]', '[INSTANCE]', '[DATABASE]');
-     *     $session = new Session();
-     *     $response = $spannerClient->createSession($formattedDatabase, $session);
+     *     $response = $spannerClient->createSession($formattedDatabase);
      * } finally {
      *     $spannerClient->close();
      * }
      * ```
      *
-     * @param string  $database     Required. The database in which the new session is created.
-     * @param Session $session      Required. The session to create.
-     * @param array   $optionalArgs {
+     * @param string $database     Required. The database in which the new session is created.
+     * @param array  $optionalArgs {
      *     Optional.
      *
+     *     @type Session $session
+     *           Required. The session to create.
      *     @type RetrySettings|array $retrySettings
      *           Retry settings to use for this call. Can be a
      *           {@see Google\ApiCore\RetrySettings} object, or an associative array of retry
@@ -580,13 +580,16 @@ class SpannerGapicClient
      *
      * @throws ApiException if the remote call fails
      */
-    public function createSession($database, $session, array $optionalArgs = [])
+    public function createSession($database, array $optionalArgs = [])
     {
         $request = new CreateSessionRequest();
         $requestParamHeaders = [];
         $request->setDatabase($database);
-        $request->setSession($session);
         $requestParamHeaders['database'] = $database;
+        if (isset($optionalArgs['session'])) {
+            $request->setSession($optionalArgs['session']);
+        }
+
         $requestParams = new RequestParamsHeaderDescriptor($requestParamHeaders);
         $optionalArgs['headers'] = isset($optionalArgs['headers']) ? array_merge($requestParams->getHeader(), $optionalArgs['headers']) : $requestParams->getHeader();
         return $this->startCall('CreateSession', Session::class, $optionalArgs, $request)->wait();
