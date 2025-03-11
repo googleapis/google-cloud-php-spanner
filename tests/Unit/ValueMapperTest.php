@@ -919,6 +919,16 @@ class ValueMapperTest extends TestCase
         $this->assertEquals('foo', $res['rowName']);
     }
 
+    public function testDecodeValueUuid()
+    {
+      $res = $this->mapper->decodeValues(
+        $this->createField(Database::TYPE_UUID),
+        $this->createRow('uuid'),
+        Result::RETURN_ASSOCIATIVE
+      );
+      $this->assertEquals('uuid', $res['uuid']);
+    }
+
     public function testDecodeValuesTimestamp()
     {
         $dt = new \DateTime;
