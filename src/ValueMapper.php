@@ -46,6 +46,7 @@ class ValueMapper
     const TYPE_PG_NUMERIC = 'pgNumeric';
     const TYPE_PG_JSONB = 'pgJsonb';
     const TYPE_PG_OID = 'pgOid';
+    const TYPE_UUID = TypeCode::UUID;
 
     /**
      * @var array
@@ -67,6 +68,7 @@ class ValueMapper
         self::TYPE_PG_JSONB,
         self::TYPE_PG_OID,
         self::TYPE_FLOAT32,
+        self::TYPE_UUID,
     ];
 
     /*
@@ -335,6 +337,8 @@ class ValueMapper
                     $value = new PgJsonb($value);
                 }
                 break;
+            case self::TYPE_UUID:
+              
 
             case self::TYPE_FLOAT32:
             case self::TYPE_FLOAT64:
